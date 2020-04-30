@@ -17,7 +17,7 @@ class ListViewController: UIViewController {
     let tableView = UITableView()
     var placesList = Place.places
     var searchController: UISearchController!
-    var filteredplaces = [Place]()
+    var filteredPlaces = [Place]()
     var datasource: UITableViewDiffableDataSource<Section, Place>!
     var isSearchInProgress = false
     
@@ -59,7 +59,7 @@ class ListViewController: UIViewController {
     func configureDataSource() {
         datasource = UITableViewDiffableDataSource<Section, Place>(tableView: tableView, cellProvider: { (tableView, indexPath, place) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PlaceCell.self), for: indexPath) as? PlaceCell else { return UITableViewCell() }
-            cell.textLabel?.text = self.placesList[indexPath.row].name
+            cell.nameLabel.text = self.placesList[indexPath.row].name
             return cell
         })
     }
@@ -75,7 +75,7 @@ class ListViewController: UIViewController {
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let places = isSearchInProgress ? filteredplaces : placesList
+        let places = isSearchInProgress ? filteredPlaces : placesList
         let place = places[indexPath.row]
         let mapVC = MapViewController()
         mapVC.configureMapView()
@@ -93,7 +93,8 @@ extension ListViewController: UISearchResultsUpdating {
             updateUI(on: self.placesList)
             return
         } else { isSearchInProgress = true }
-        filteredplaces = placesList.filter { $0.name.lowercased().contains(filter.lowercased()) }
-        updateUI(on: filteredplaces)
+        filteredPlaces = placesList.filter { $0.name.lowercased().contains(filter.lowercased()) }
+        print(filteredPlaces)
+        updateUI(on: filteredPlaces)
     }
 }

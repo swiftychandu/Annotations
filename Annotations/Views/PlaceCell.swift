@@ -10,6 +10,7 @@ import UIKit
 
 class PlaceCell: UITableViewCell {
 
+    let nameLabel = NameLabel(textAlignment: .left, fontSize: 20)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,6 +24,14 @@ class PlaceCell: UITableViewCell {
     
     func configure() {
         backgroundColor = .systemBackground
+        addSubview(nameLabel)
+        
+        NSLayoutConstraint.activate([
+            nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+        ])
     
     }
 
