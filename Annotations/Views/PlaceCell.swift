@@ -21,6 +21,9 @@ class PlaceCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
    
+    func updateCell(with place: Place) {
+        nameLabel.text = place.name
+    }
     
     func configure() {
         backgroundColor = .systemBackground

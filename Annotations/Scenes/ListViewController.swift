@@ -59,7 +59,7 @@ class ListViewController: UIViewController {
     func configureDataSource() {
         datasource = UITableViewDiffableDataSource<Section, Place>(tableView: tableView, cellProvider: { (tableView, indexPath, place) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PlaceCell.self), for: indexPath) as? PlaceCell else { return UITableViewCell() }
-            cell.nameLabel.text = self.placesList[indexPath.row].name
+            cell.updateCell(with: place)
             return cell
         })
     }
@@ -80,8 +80,8 @@ extension ListViewController: UITableViewDelegate {
         let mapVC = MapViewController()
         mapVC.configureMapView()
         mapVC.setAnnotationPin(for: place)
-        let nc = UINavigationController(rootViewController: mapVC)
-        present(nc, animated: true)
+        let navController = UINavigationController(rootViewController: mapVC)
+        present(navController, animated: true)
     }
 }
 
@@ -94,7 +94,6 @@ extension ListViewController: UISearchResultsUpdating {
             return
         } else { isSearchInProgress = true }
         filteredPlaces = placesList.filter { $0.name.lowercased().contains(filter.lowercased()) }
-        print(filteredPlaces)
         updateUI(on: filteredPlaces)
     }
 }
